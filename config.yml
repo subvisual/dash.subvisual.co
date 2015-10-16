@@ -1,0 +1,8 @@
+:errbit:
+  :projects:
+    :project_1:
+      :api_key: '44787af4dd96384c90b0da5c7e504f95'
+    :project_2:
+      :api_key: 'ccfad2a984e1986e2aaf4f325e77d462'
+  :base_uri: 'https://log.subvisual.co'
+  :date_format: '%d/%m %H:%M'

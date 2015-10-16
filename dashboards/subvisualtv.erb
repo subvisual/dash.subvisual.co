@@ -1,0 +1,31 @@
+<% content_for :title do %>My super sweet dashboard<% end %>
+
+<div class="gridster">
+  <ul>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="welcome" data-view="Text" data-title="Hello" data-text="This is your shiny new dashboard." data-moreinfo="Protip: You can drag the widgets around!"></div>
+    </li>
+
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+      <div data-view="PullRequests" data-id="github"></div>
+    </li>
+
+    <li data-row="1" data-col="1" data-sizex="8" data-sizey="3">
+    </li>
+
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="errbit" data-view="Errbit"></div>
+    </li>
+    <li data-row="2" data-col="1" data-sizex="2" data-sizey="1">
+      <div data-red="200" data-yellow="100" data-id="errbit-2" data-view="Errbit" data-title="Errbit"></div>
+    </li>
+
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <%# <div data-id="valuation" data-view="Number" data-title="Current Valuation" data-moreinfo="In billions" data-prefix="$"></div> %>
+    </li>
+
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+      <%# <div data-id="convergence" data-view="Graph" data-title="Convergence" style="background-color:#ff9618"></div> %>
+    </li>
+  </ul>
+</div>
