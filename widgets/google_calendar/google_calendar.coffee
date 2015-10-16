@@ -2,6 +2,7 @@ class Dashing.GoogleCalendar extends Dashing.Widget
 
   onData: (data) =>
     event = rest = null
+    console.log(data)
     getEvents = (first, others...) ->
       event = first
       rest = others
