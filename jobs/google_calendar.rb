@@ -1,58 +1,59 @@
-# encoding: UTF-8
+# # encoding: UTF-8
 
-require 'google/api_client'
-require 'date'
-require 'time'
-require 'digest/md5'
-require 'active_support'
-require 'active_support/all'
-require 'json'
+require 'google_calendar'
+require 'dotenv'
+Dotenv.load
 
-# Update these to match your own apps credentials
-service_account_email = '360478876963-i850sf6pptktr3a7p9gmuks0im7d238r@developer.gserviceaccount.com' # Email of service account
-key_file = 'my-calendar.p12' # File containing your private key
-key_secret = 'notasecret' # Password to unlock private key
-calendarID = 'mpalhas@gmail.com' # Calendar ID.
+class GoogleCustomEvent
+  def initialize(event)
+    @event = event
+  end
+  attr_reader :event
 
-# Get the Google API client
-client = Google::APIClient.new(:application_name => 'dash.subvisual.co',
-                               :application_version => '0.0.1')
-
-# Load your credentials for the service account
-if not key_file.nil? and File.exists? key_file
-  key = Google::APIClient::KeyUtils.load_from_pkcs12(key_file, key_secret)
-else
-  key = OpenSSL::PKey::RSA.new ENV['GOOGLE_SERVICE_PK'], key_secret
+  def to_json(*args)
+    {
+      title: event.title,
+      start: event.start_time,
+      end: event.end_time
+    }.to_json
+  end
 end
 
-client.authorization = Signet::OAuth2::Client.new(
-  :token_credential_uri => 'https://accounts.google.com/o/oauth2/token',
-  :audience => 'https://accounts.google.com/o/oauth2/token',
-  :scope => 'https://www.googleapis.com/auth/calendar.readonly',
-  :issuer => service_account_email,
-  :signing_key => key)
+SCHEDULER.every '1h', :first_in => 0 do |job|
+  cal = Google::Calendar.new(
+    client_id: ENV['GOOGLE_CLIENT_ID'],
+    client_secret: ENV['GOOGLE_CLIENT_SECRET'],
+    calendar: 'mpalhas@gmail.com',
+    redirect_url: 'http://localhost/callback/'
+  )
 
-# Start the scheduler
-# SCHEDULER.every '15m', :first_in => 0 do |job|
+  if ENV['GOOGLE_REFRESH_TOKEN']
+    cal.login_with_refresh_token(ENV['GOOGLE_REFRESH_TOKEN'])
+  else
+    puts 'Do you already have a refresh token? (y/n)'
+    has_token = $stdin.gets.chomp
 
-  # Request a token for our service account
-  client.authorization.fetch_access_token!
+    if has_token.downcase != 'y'
+      puts 'Visit the following web page in your browser and approve access.'
+      puts cal.authorize_url
+      puts '\nCopy the code that Google returned and paste it here:'
 
-  # Get the calendar API
-  service = client.discovered_api('calendar','v3')
+      refresh_token = cal.login_with_auth_code($stdin.gets.chomp)
 
-  # Start and end dates
-  now = DateTime.now
+      puts '\nMake sure you SAVE YOUR REFRESH TOKEN so you don\'t have to prompt the user to approve access again.'
+      puts "your refresh token is:\n\t#{refresh_token}\n"
+      puts 'Press return to continue'
+      $stdin.gets.chomp
+    else
+      puts 'Enter your refresh token'
+      refresh_token = $stdin.gets.chomp
+      cal.login_with_refresh_token(refresh_token)
+    end
+  end
 
-  result = client.execute(:api_method => service.events.list,
-                          :parameters => {'calendarId' => calendarID,
-                                          'timeMin' => now.rfc3339,
-                                          'orderBy' => 'startTime',
-                                          'singleEvents' => 'true',
-                                          'maxResults' => 6})  # How many calendar items to get
+  events = cal.events.map do |event|
+    GoogleCustomEvent.new(event)
+  end
 
-  require 'pry'
-  binding.pry
-  send_event('google_calendar', { events: result.data })
-
-# end
+  send_event('google_calendar', { events: events })
+end
