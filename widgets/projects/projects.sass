@@ -1,0 +1,64 @@
+$background-color: #444
+$font-color: #fff
+$shadow-color: #000
+$success: #86d751
+$failure: #e3394f
+
+.widget-projects
+  .row
+    display: flex
+    flex-direction: row
+
+    .col
+      flex-grow: 1
+
+.widget-projects
+  li
+    position: absolute
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+
+    h1
+      margin-top: 20px
+
+    h3
+      margin-top: 30px
+      font-size: 80px
+      text-transform: uppercase
+
+    h4
+      font-size: 15px
+      text-transform: uppercase
+      margin-bottom: 20px
+
+    span
+      // position: absolute
+      right: 0
+      left: 0
+      bottom: 100px
+      color: #fff
+      font-size: 8px
+      letter-spacing: 2px
+      text-transform: uppercase
+
+
+
+    p
+      &.updated-at
+        text-transform: uppercase
+        letter-spacing: 1px
+        font-size: 10px
+
+  .red
+    background-color: $failure
+
+    h2, p.updated-at
+      color: lighten($failure, 20%)
+
+  .green
+    background-color: $success
+
+    h2, p.updated-at
+      color: lighten($success, 20%)

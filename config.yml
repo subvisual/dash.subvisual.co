@@ -1,8 +1,26 @@
-:errbit:
-  :projects:
-    :project_1:
-      :api_key: '36e7f2411ebd3b7ca97a8c04473f166e'
-    :project_2:
-      :api_key: 'ccfad2a984e1986e2aaf4f325e77d462'
-  :base_uri: 'https://log.subvisual.co'
-  :date_format: '%d/%m %H:%M'
+projects:
+  blog:
+    errbit:
+      api_key: '36e7f2411ebd3b7ca97a8c04473f166e'
+    semaphore:
+      name: 'blog.subvisual.co'
+  blog2:
+    errbit:
+      api_key: '36e7f2411ebd3b7ca97a8c04473f166e'
+    semaphore:
+      name: 'blog.subvisual.co'
+  blog3:
+    errbit:
+      api_key: '36e7f2411ebd3b7ca97a8c04473f166e'
+    semaphore:
+      name: 'blog.subvisual.co'
+  blog4:
+    errbit:
+      api_key: '36e7f2411ebd3b7ca97a8c04473f166e'
+    semaphore:
+      name: 'blog.subvisual.co'
+  blog5:
+    errbit:
+      api_key: '36e7f2411ebd3b7ca97a8c04473f166e'
+    semaphore:
+      name: 'blog.subvisual.co'

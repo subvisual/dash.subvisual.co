@@ -17,5 +17,6 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
     pulls
   }
 
+  puts '---GITHUB---'
   send_event('github', { header: "Github Pull Requests", pulls: open_pull_requests })
 end

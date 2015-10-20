@@ -1,0 +1,25 @@
+<h1>test</h1>
+<ul>
+  <li data-foreach-project="projects" data-bind-class="project.errbit.status">
+    <h1 data-bind="project.semaphore"></h1>
+    <div class="row">
+      <div class="col col-errbit">
+        <h3 data-bind="project.errbit.errors"></h3>
+        <h4 data-showif="project.errbit.errors | equals 1"> unresolved error</h4>
+        <h4 data-hideif="project.errbit.errors | equals 1"> unresolved errors</h4>
+        <span data-bind="project.errbit.date | prepend 'last error: '"></span>
+        <p class="updated-at" data-bind="updatedAtMessage"></p>
+      </div>
+      <div class="col col-semaphore">
+        <div class="semaphore-heading">
+          <span class="label" data-bind="project.semaphore.label"></span>
+          <span class="value" data-bind="project.semaphore.value"></span>
+          <span class="label" data-bind="project.semaphore.label"></span>
+        </div>
+        <p class="more-info" data-bind="moreinfo")
+          <p class="updated-at" data-bind="updatedAtMessage"></p>
+        </p>
+      </div>
+    </div>
+  </li>
+</ul>
